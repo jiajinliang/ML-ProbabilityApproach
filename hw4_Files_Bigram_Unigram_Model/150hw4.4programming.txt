@@ -1,0 +1,256 @@
+import numpy
+import re
+unigram=numpy.loadtxt("./unigram.txt")
+sum = 0;
+for numbers in unigram:
+    sum = sum + numbers;
+f=open("./vocab.txt")
+lines=f.readlines()
+f.close()
+bigram=numpy.loadtxt("./bigram.txt")
+plist=[];
+slist=[];
+for line in lines:
+    if(line[0]=='S'):
+        p=unigram[lines.index(line)]/sum
+        plist.insert(0,p)
+        slist.insert(0,line)
+a=sorted(zip(plist,slist))
+print("unigram probabilities of words starting with 'S':\n")
+for i in range(0,len(a)):
+    print (a[i])
+    
+for line in lines:
+    if(line=="THE\n"):
+        p=unigram[lines.index(line)]/sum
+        print("Pu(the)=",p)
+    if(line=="STOCK\n"):
+        p=unigram[lines.index(line)]/sum
+        print("Pu(stock)=",p)
+    if(line=="MARKET\n"):
+        p=unigram[lines.index(line)]/sum
+        print("Pu(market)=",p)
+    if(line=="FELL\n"):
+        p=unigram[lines.index(line)]/sum
+        print("Pu(fell)=",p)
+    if(line=="BY\n"):
+        p=unigram[lines.index(line)]/sum
+        print("Pu(by)=",p)
+    if(line=="ONE\n"):
+        p=unigram[lines.index(line)]/sum
+        print("Pu(one)=",p)
+    if(line=="HUNDRED\n"):
+        p=unigram[lines.index(line)]/sum
+        print("Pu(hundred)=",p)
+    if(line=="POINTS\n"):
+        p=unigram[lines.index(line)]/sum
+        print("Pu(points)=",p)
+    if(line=="LAST\n"):
+        p=unigram[lines.index(line)]/sum
+        print("Pu(last)=",p)
+    if(line=="WEEK\n"):
+        p=unigram[lines.index(line)]/sum
+        print("Pu(week)=",p)
+    if(line=="WEEK\n"):
+        p=unigram[lines.index(line)]/sum
+        print("Pu(week)=",p)
+    if(line=="SIXTEEN\n"):
+        p=unigram[lines.index(line)]/sum
+        print("Pu(sixteen)=",p)
+    if(line=="OFFICIALS\n"):
+        p=unigram[lines.index(line)]/sum
+        print("Pu(officials)=",p)
+    if(line=="SOLD\n"):
+        p=unigram[lines.index(line)]/sum
+        print("Pu(sold)=",p)
+    if(line=="FIRE\n"):
+        p=unigram[lines.index(line)]/sum
+        print("Pu(fire)=",p)
+    if(line=="INSURANCE\n"):
+        p=unigram[lines.index(line)]/sum
+        print("Pu(insurance)=",p)
+
+    
+sum = 0;
+for stuff in bigram:
+    #print(int(stuff[2]))
+    if (int(stuff[0]) == 4):
+        #print(stuff[0])
+        sum = sum + int(stuff[2]);
+#print(sum)
+plist=[];
+slist=[];
+
+for stuff in bigram:
+    if(int(stuff[0])==4):
+        slist.insert(0,lines[int(stuff[1])-1])
+        p = int(stuff[2])/sum
+        plist.insert(0,p)
+b=sorted(zip(plist,slist))
+print("\n10 most likely words following 'THE':\n")
+for i in range(len(b)-9,len(b)):
+    print(b[i])
+
+count = 0;    
+sum = 0;
+for stuff in bigram:
+    if (int(stuff[0]) == 1):
+        sum = sum + int(stuff[2]);
+        if(int(stuff[1]==4)):
+            count=int(stuff[2])
+p=count/sum
+print("Pb(the|<s>)=",p)
+count = 0;
+sum = 0;
+for stuff in bigram:
+    if (int(stuff[0]) == 4):
+        sum = sum + int(stuff[2]);
+        if(int(stuff[1]==133)):
+            count=int(stuff[2])
+p=count/sum
+print("Pb(stock|the)=",p)
+count = 0;
+sum = 0;
+for stuff in bigram:
+    if (int(stuff[0]) == 133):
+        sum = sum + int(stuff[2]);
+        if(int(stuff[1]==122)):
+            count=int(stuff[2])
+p=count/sum
+print("Pb(market|stock)=",p)
+sum = 0;
+count = 0;
+for stuff in bigram:
+    if (int(stuff[0]) == 122):
+        sum = sum + int(stuff[2]);
+        if(int(stuff[1]==377)):
+            count=int(stuff[2])
+p=count/sum
+print("Pb(fell|market)=",p)
+sum = 0;
+count = 0;
+for stuff in bigram:
+    if(int(stuff[1]==26)):
+        count=int(stuff[2])
+    if (int(stuff[0]) == 377):
+        sum = sum + int(stuff[2]);
+p=count/sum
+print("Pb(by|fell)=",p)
+sum = 0;
+count = 0;
+for stuff in bigram:
+    if (int(stuff[0]) == 26):
+        sum = sum + int(stuff[2]);
+        if(int(stuff[1]==17)):
+            count=int(stuff[2])
+p=count/sum
+print("Pb(one|by)=",p)
+sum = 0;
+count = 0;
+for stuff in bigram:
+    if (int(stuff[0]) == 17):
+        sum = sum + int(stuff[2]);
+        if(int(stuff[1]==27)):
+            count=int(stuff[2])
+p=count/sum
+print("Pb(hundred|one)=",p)
+sum = 0;
+count = 0;
+for stuff in bigram:
+    if (int(stuff[0]) == 27):
+        sum = sum + int(stuff[2]);
+        if(int(stuff[1]==396)):
+            count=int(stuff[2])
+p=count/sum
+print("Pb(points|hundred)=",p)
+sum = 0;
+count = 0;
+for stuff in bigram:
+    if (int(stuff[0]) == 396):
+        sum = sum + int(stuff[2]);
+        if(int(stuff[1]==89)):
+            count=int(stuff[2])
+p=count/sum
+print("Pb(last|points)=",p)
+sum = 0;
+count = 0;
+for stuff in bigram:
+    if (int(stuff[0]) == 89):
+        sum = sum + int(stuff[2]);
+        if(int(stuff[1]==156)):
+            count=int(stuff[2])
+p=count/sum
+print("Pb(week|last)=",p)
+sum = 0;
+count = 0;
+for stuff in bigram:
+    if (int(stuff[0]) == 4):
+        sum = sum + int(stuff[2]);
+        if(int(stuff[1]==499)):
+            count=int(stuff[2])
+p=count/sum
+print("Pb(sixteen|the)=",p)
+sum = 0;
+count = 0;
+for stuff in bigram:
+    if (int(stuff[0]) == 499):
+        sum = sum + int(stuff[2]);
+        if(int(stuff[1]==134)):
+            count=int(stuff[2])
+print(count,sum)
+p=count/sum
+print("Pb(officials|sixteen)=",p)
+sum = 0;
+count = 0;
+for stuff in bigram:
+    if (int(stuff[0]) == 134):
+        sum = sum + int(stuff[2]);
+        if(int(stuff[1]==500)):
+            count=int(stuff[2])
+p=count/sum
+print("Pb(sold|officials)=",p)
+sum = 0;
+count = 0;
+for stuff in bigram:
+    if (int(stuff[0]) == 500):
+        sum = sum + int(stuff[2]);
+        if(int(stuff[1]==444)):
+            count=int(stuff[2])
+p=count/sum
+print("Pb(fire|sold)=",p)
+sum = 0;
+count = 0;
+for stuff in bigram:
+    if (int(stuff[0]) == 444):
+        sum = sum + int(stuff[2]);
+        if(int(stuff[1]==489)):
+            count=int(stuff[2])
+p=count/sum
+print("Pb(insurance|fire)=",p)
+
+#def findmll(w1,w2,lamb):
+    #p1=count(w1)/sum
+    #p2=count(w2)/sum
+    #return (1-lamb)*p1 + lamb*p2
+lamb=0
+d1=[]
+d2=[]
+wordlist=['THE','SIXTEEN','OFFICIALS','SOLD','FIRE','INSURANCE']
+while(lamb<1):
+    d=findmll('<s>',wordlist[0],lamb)
+    for i in range(0,len(wordlist)-1):
+        d=d*findmml(wordlist[i],wordlist[i+1],lamb)
+    if d<=0:
+        d2.append(-float('inf'))
+    else:
+        d2.append(math.log(d))
+    d1.append(lamb)
+    lamb=lamb+0.01
+plt.xlabel('lambda')
+plt.ylabel('mixture log-likelihood')
+plt.plot(d1,d2)
+plt.show()
+mmlmax=np.array(d2).max()
+lambdamax=d1[d2.index(mmlmax)]
+print("Maximum Likelihood Probability = ",mmlmax)
+print("lambda = ",lambdamax)
